@@ -1,0 +1,39 @@
+name: denish-ci-pipeline
+
+on:
+  pull_request:
+    branches:
+      - assignment1-denish-8901001
+
+jobs:
+  build-test-container:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 🔄 Checkout Code
+      uses: actions/checkout@v3
+
+    - name: 🐍 Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: 📦 Install Dependencies
+      run: |
+        pip install -r app/requirements.txt
+
+    - name: 🧪 Run Unit Tests
+      run: |
+        python -m unittest app/test_app.py
+
+    - name: 🐳 Build Docker Image
+      run: docker build -t flask-app:latest .
+
+    - name: 🚀 Run Docker Container
+      run: docker run -d -p 5000:5000 --name flask-app flask-app:latest
+
+    - name: 📋 Show Running Containers
+      run: docker ps
+
+    - name: 🛑 Stop Container
+      run: docker stop flask-app
