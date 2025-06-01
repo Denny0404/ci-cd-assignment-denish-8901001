@@ -1,10 +1,11 @@
 import unittest
-from app import app
+from app.app import app as flask_app  # import the Flask app object correctly
 
 class FlaskAppTests(unittest.TestCase):
 
     def setUp(self):
-        self.client = app.test_client()
+        flask_app.testing = True
+        self.client = flask_app.test_client()
 
     def test_home_status_code(self):
         response = self.client.get('/')
