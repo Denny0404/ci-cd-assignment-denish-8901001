@@ -1,6 +1,9 @@
 name: denish-ci-pipeline
 
 on:
+  push:
+    branches:
+      - assignment1-denish-8901001
   pull_request:
     branches:
       - assignment1-denish-8901001
